@@ -106,11 +106,14 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
         } \
 }
 
-/* HS_URI(setprop, prompt) */
 /* Better History */
+/* HS_URI(setprop, prompt) */
 #define HS_URI(s, p) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
-            "prop=\"`cat " HS_FILE " | dmenu -l 10 -i -p $2 | sed -e 's/\".*\"//;s/  / /g' | cut -d ' ' -f3`\" &&" \
+            "prop=\"`cat " HS_FILE \
+            " | dmenu -l 10 -i -p $2" \
+            " | sed -e 's/\".*\"// ; s/  / /g'" \
+            " | cut -d ' ' -f3`\" &&" \
             "xprop -id $0 -f $1 8s -set $1 \"$prop\"", \
             winid, s, p, NULL \
         } \
@@ -147,7 +150,8 @@ static Key keys[] = {
 	{ MODKEY,                GDK_KEY_g,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
 	{ MODKEY,                GDK_KEY_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
 	{ MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
-	{ MODKEY,                GDK_KEY_Return, spawn,      HS_URI("_SURF_GO", PROMPT_HS) }, /* Better History */
+	/* Better History */
+	{ MODKEY,                GDK_KEY_Return, spawn,      HS_URI("_SURF_GO", PROMPT_HS) },
 
 	{ 0,                     GDK_KEY_Escape, stop,       { 0 } },
 	{ MODKEY,                GDK_KEY_c,      stop,       { 0 } },

@@ -1090,10 +1090,10 @@ void
 updatehistory(const char *u, const char *t)
 {
 	FILE *f;
-	f = fopen(historyfile, "a+");
-
 	char b[20];
-	time_t now = time (0);
+	time_t now = time(0);
+
+	f = fopen(historyfile, "a+");
 	strftime (b, 20, "%Y-%m-%d %H:%M:%S", localtime (&now));
 	fputs(b, f);
 
