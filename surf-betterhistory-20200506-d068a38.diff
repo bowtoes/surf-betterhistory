@@ -1,5 +1,5 @@
 diff --git a/config.def.h b/config.def.h
-index 34265f6..2875857 100644
+index 34265f6..dd545d3 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -7,6 +7,9 @@ static char *certdir        = "~/.surf/certificates/";
@@ -20,7 +20,7 @@ index 34265f6..2875857 100644
  
  /* SETPROP(readprop, setprop, prompt)*/
  #define SETPROP(r, s, p) { \
-@@ -102,6 +106,19 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
+@@ -102,6 +106,21 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
          } \
  }
  
@@ -28,7 +28,9 @@ index 34265f6..2875857 100644
 +/* HS_URI(setprop, prompt) */
 +#define HS_URI(s, p) {\
 +        .v = (const char *[]){ "/bin/sh", "-c", \
-+            "prop=\"`cat " HS_FILE \
++            "prop=\"" \
++            "`awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }'" \
++            " " HS_FILE "" \
 +            " | dmenu -l 10 -i -p $2" \
 +            " | sed -e 's/\".*\"// ; s/  / /g'" \
 +            " | cut -d ' ' -f3`\" &&" \
@@ -40,7 +42,7 @@ index 34265f6..2875857 100644
  /* styles */
  /*
   * The iteration will stop at the first match, beginning at the beginning of
-@@ -133,6 +150,8 @@ static Key keys[] = {
+@@ -133,6 +152,8 @@ static Key keys[] = {
  	{ MODKEY,                GDK_KEY_g,      spawn,      SETPROP("_SURF_URI", "_SURF_GO", PROMPT_GO) },
  	{ MODKEY,                GDK_KEY_f,      spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },
  	{ MODKEY,                GDK_KEY_slash,  spawn,      SETPROP("_SURF_FIND", "_SURF_FIND", PROMPT_FIND) },

@@ -110,7 +110,9 @@ static WebKitFindOptions findopts = WEBKIT_FIND_OPTIONS_CASE_INSENSITIVE |
 /* HS_URI(setprop, prompt) */
 #define HS_URI(s, p) {\
         .v = (const char *[]){ "/bin/sh", "-c", \
-            "prop=\"`cat " HS_FILE \
+            "prop=\"" \
+            "`awk '{a[i++]=$0} END {for (j=i-1; j>=0;) print a[j--] }'" \
+            " " HS_FILE "" \
             " | dmenu -l 10 -i -p $2" \
             " | sed -e 's/\".*\"// ; s/  / /g'" \
             " | cut -d ' ' -f3`\" &&" \
